@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('rush_site');
             $table->string('rush_id');
             $table->text('rush_description');
             $table->float('rush_value');

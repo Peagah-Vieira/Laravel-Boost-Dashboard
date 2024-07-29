@@ -35,9 +35,13 @@ class OrderResource extends Resource
             ->schema([
                 Wizard::make([
                     Wizard\Step::make('Pedido')
+                        ->description('Configurações do Pedido')
                         ->icon('heroicon-m-shopping-bag')
                         ->completedIcon('heroicon-m-hand-thumb-up')
                         ->schema([
+                            Forms\Components\TextInput::make('rush_site')
+                                ->required()
+                                ->maxLength(255),
                             Forms\Components\TextInput::make('rush_id')
                                 ->required()
                                 ->maxLength(255),
@@ -55,7 +59,8 @@ class OrderResource extends Resource
                                     'Concluido' => 'Concluido',
                                 ]),
                         ]),
-                    Wizard\Step::make('Detalhes - Buyer')
+                    Wizard\Step::make('Detalhes - Comprador')
+                        ->description('Dados do Comprador')
                         ->schema([
                             Forms\Components\TextInput::make('buyer_name')
                                 ->maxLength(255),
@@ -65,6 +70,7 @@ class OrderResource extends Resource
                                 ->maxLength(255),
                         ]),
                     Wizard\Step::make('Detalhes - Boosters')
+                        ->description('Dados dos Boosters')
                         ->schema([
                             Forms\Components\Select::make('booster_id')
                                 ->relationship(name: 'booster', titleAttribute: 'first_name'),
@@ -76,11 +82,12 @@ class OrderResource extends Resource
                                 ->relationship(name: 'booster', titleAttribute: 'first_name'),
                         ]),
                     Wizard\Step::make('Pagamento')
+                        ->description('Relacionado ao Pagamento')
                         ->schema([
                             Forms\Components\Toggle::make('paid'),
                             Forms\Components\DateTimePicker::make('payment_date'),
                         ]),
-                ])
+                ])->skippable()
             ]);
     }
 
