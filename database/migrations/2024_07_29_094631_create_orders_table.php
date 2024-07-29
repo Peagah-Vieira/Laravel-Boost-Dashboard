@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('rush_id');
-            $table->text('description');
-            $table->integer('progress');
+            $table->text('rush_description');
             $table->float('rush_value');
-            $table->foreignId('booster1_id')->references('id')->on('boosters')->onDelete('cascade');
+            $table->string('rush_progress');
+            $table->foreignId('booster_id')->references('id')->on('boosters')->onDelete('cascade');
             $table->foreignId('booster2_id')->references('id')->on('boosters')->onDelete('cascade');
             $table->foreignId('booster3_id')->references('id')->on('boosters')->onDelete('cascade');
             $table->foreignId('booster4_id')->references('id')->on('boosters')->onDelete('cascade');
