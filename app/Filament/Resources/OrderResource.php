@@ -44,13 +44,13 @@ class OrderResource extends Resource
                             Forms\Components\TextInput::make('rush_value')
                                 ->required()
                                 ->numeric(),
-                            Forms\Components\RichEditor::make('rush_description')
+                            Forms\Components\TextInput::make('rush_description')
                                 ->required()
                                 ->columnSpanFull(),
                             Forms\Components\Select::make('rush_progress')
                                 ->required()
                                 ->options([
-                                    'Não iniciada' => 'Não iniciado',
+                                    'Não iniciado' => 'Não iniciado',
                                     'Em andamento' => 'Em andamento',
                                     'Concluido' => 'Concluido',
                                 ]),
@@ -88,36 +88,27 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('rush_id')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('rush_progress')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('rush_value')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('booster.first_name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('booster2_id')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('booster3_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('booster4_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('paid')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('payment_date')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->searchable()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Não iniciado' => 'gray',
+                        'Em andamento' => 'primary',
+                        'Concluido' => 'success',
+                    }),
+                Tables\Columns\TextColumn::make('rush_description')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('buyer_name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('buyer_discord')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('buyer_battlenet')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
