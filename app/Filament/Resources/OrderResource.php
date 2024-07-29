@@ -2,18 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
-use App\Models\Order;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Order;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Wizard;
+use Filament\Resources\Resource;
 use Illuminate\Support\HtmlString;
+use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\OrderResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\OrderResource\RelationManagers;
 
 class OrderResource extends Resource
 {
@@ -33,61 +32,83 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Wizard::make([
-                    Wizard\Step::make('Pedido')
-                        ->description('Configurações do Pedido')
-                        ->icon('heroicon-m-shopping-bag')
-                        ->completedIcon('heroicon-m-hand-thumb-up')
-                        ->schema([
-                            Forms\Components\TextInput::make('rush_site')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('rush_id')
-                                ->required()
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('rush_value')
-                                ->required()
-                                ->numeric(),
-                            Forms\Components\TextInput::make('rush_description')
-                                ->required()
-                                ->columnSpanFull(),
-                            Forms\Components\Select::make('rush_progress')
-                                ->required()
-                                ->options([
-                                    'Não iniciado' => 'Não iniciado',
-                                    'Em andamento' => 'Em andamento',
-                                    'Concluido' => 'Concluido',
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\Wizard::make([
+                            Forms\Components\Wizard\Step::make('Pedido')
+                                ->description('Configurações do Pedido')
+                                ->completedIcon('heroicon-m-hand-thumb-up')
+                                ->schema([
+                                    Forms\Components\Select::make('rush_site')
+                                        ->required()
+                                        ->options([
+                                            'Kingboost' => 'Kingboost',
+                                            'Overgear' => 'Overgear',
+                                            'Skycoach' => 'Skycoach',
+                                        ])
+                                        ->label('Site do Rush'),
+                                    Forms\Components\TextInput::make('rush_id')
+                                        ->required()
+                                        ->label('Id do Rush'),
+                                    Forms\Components\TextInput::make('rush_value')
+                                        ->required()
+                                        ->numeric()
+                                        ->label('Valor do Rush'),
+                                    Forms\Components\TextInput::make('rush_description')
+                                        ->required()
+                                        ->columnSpanFull()
+                                        ->label('Descrição do Rush'),
+                                    Forms\Components\Select::make('rush_progress')
+                                        ->required()
+                                        ->options([
+                                            'Não iniciado' => 'Não iniciado',
+                                            'Em andamento' => 'Em andamento',
+                                            'Concluido' => 'Concluido',
+                                        ])
+                                        ->label('Progresso do Rush'),
                                 ]),
-                        ]),
-                    Wizard\Step::make('Detalhes - Comprador')
-                        ->description('Dados do Comprador')
-                        ->schema([
-                            Forms\Components\TextInput::make('buyer_name')
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('buyer_discord')
-                                ->maxLength(255),
-                            Forms\Components\TextInput::make('buyer_battlenet')
-                                ->maxLength(255),
-                        ]),
-                    Wizard\Step::make('Detalhes - Boosters')
-                        ->description('Dados dos Boosters')
-                        ->schema([
-                            Forms\Components\Select::make('booster_id')
-                                ->relationship(name: 'booster', titleAttribute: 'first_name'),
-                            Forms\Components\Select::make('booster2_id')
-                                ->relationship(name: 'booster', titleAttribute: 'first_name'),
-                            Forms\Components\Select::make('booster3_id')
-                                ->relationship(name: 'booster', titleAttribute: 'first_name'),
-                            Forms\Components\Select::make('booster4_id')
-                                ->relationship(name: 'booster', titleAttribute: 'first_name'),
-                        ]),
-                    Wizard\Step::make('Pagamento')
-                        ->description('Relacionado ao Pagamento')
-                        ->schema([
-                            Forms\Components\Toggle::make('paid'),
-                            Forms\Components\DateTimePicker::make('payment_date'),
-                        ]),
-                ])->skippable()
+                            Forms\Components\Wizard\Step::make('Detalhes - Comprador')
+                                ->description('Dados do Comprador')
+                                ->completedIcon('heroicon-m-hand-thumb-up')
+                                ->schema([
+                                    Forms\Components\TextInput::make('buyer_name')
+                                        ->maxLength(255)
+                                        ->label('Nome do Comprador'),
+                                    Forms\Components\TextInput::make('buyer_discord')
+                                        ->maxLength(255)
+                                        ->label('Discord do Comprador'),
+                                    Forms\Components\TextInput::make('buyer_battlenet')
+                                        ->maxLength(255)
+                                        ->label('Battlenet do Comprador'),
+                                ]),
+                            Forms\Components\Wizard\Step::make('Detalhes - Boosters')
+                                ->description('Dados dos Boosters')
+                                ->completedIcon('heroicon-m-hand-thumb-up')
+                                ->schema([
+                                    Forms\Components\Select::make('booster_id')
+                                        ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                        ->label('Booster 1'),
+                                    Forms\Components\Select::make('booster2_id')
+                                        ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                        ->label('Booster 2'),
+                                    Forms\Components\Select::make('booster3_id')
+                                        ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                        ->label('Booster 3'),
+                                    Forms\Components\Select::make('booster4_id')
+                                        ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                        ->label('Booster 4'),
+                                ]),
+                            Forms\Components\Wizard\Step::make('Pagamento')
+                                ->description('Relacionado ao Pagamento')
+                                ->completedIcon('heroicon-m-hand-thumb-up')
+                                ->schema([
+                                    Forms\Components\DateTimePicker::make('payment_date')
+                                        ->label('Data do Pagamento'),
+                                    Forms\Components\Toggle::make('paid')
+                                        ->label('Pago'),
+                                ]),
+                        ])->skippable()
+                    ]),
             ]);
     }
 
@@ -107,6 +128,10 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('rush_description')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('rush_value')
+                    ->searchable()
+                    ->sortable()
+                    ->money('USD'),
                 Tables\Columns\TextColumn::make('buyer_name')
                     ->searchable()
                     ->sortable(),
@@ -118,7 +143,13 @@ class OrderResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('rush_progress')
+                    ->multiple()
+                    ->options([
+                        'Não iniciado' => 'Não iniciado',
+                        'Em andamento' => 'Em andamento',
+                        'Concluido' => 'Concluido',
+                    ])
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -128,7 +159,8 @@ class OrderResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->emptyStateHeading('Nenhum pedido encontrado.');
     }
 
     public static function getRelations(): array
