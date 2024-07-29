@@ -41,39 +41,44 @@ class OrderResource extends Resource
                             Forms\Components\TextInput::make('rush_id')
                                 ->required()
                                 ->maxLength(255),
+                            Forms\Components\TextInput::make('rush_value')
+                                ->required()
+                                ->numeric(),
                             Forms\Components\RichEditor::make('rush_description')
                                 ->required()
                                 ->columnSpanFull(),
                             Forms\Components\Select::make('rush_progress')
                                 ->required()
                                 ->options([
-                                    'Não iniciada' => 'Não iniciada',
+                                    'Não iniciada' => 'Não iniciado',
                                     'Em andamento' => 'Em andamento',
                                     'Concluido' => 'Concluido',
                                 ]),
-                            Forms\Components\TextInput::make('rush_value')
-                                ->required()
-                                ->numeric(),
                         ]),
-                    Wizard\Step::make('Detalhes')
+                    Wizard\Step::make('Detalhes - Buyer')
+                        ->schema([
+                            Forms\Components\TextInput::make('buyer_name')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('buyer_discord')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('buyer_battlenet')
+                                ->maxLength(255),
+                        ]),
+                    Wizard\Step::make('Detalhes - Boosters')
                         ->schema([
                             Forms\Components\Select::make('booster_id')
-                                ->relationship(name: 'booster', titleAttribute: 'first_name')
-                                ->required(),
+                                ->relationship(name: 'booster', titleAttribute: 'first_name'),
                             Forms\Components\Select::make('booster2_id')
-                                ->relationship(name: 'booster', titleAttribute: 'first_name')
-                                ->required(),
+                                ->relationship(name: 'booster', titleAttribute: 'first_name'),
                             Forms\Components\Select::make('booster3_id')
-                                ->relationship(name: 'booster', titleAttribute: 'first_name')
-                                ->required(),
+                                ->relationship(name: 'booster', titleAttribute: 'first_name'),
                             Forms\Components\Select::make('booster4_id')
-                                ->relationship(name: 'booster', titleAttribute: 'first_name')
-                                ->required(),
+                                ->relationship(name: 'booster', titleAttribute: 'first_name'),
                         ]),
                     Wizard\Step::make('Pagamento')
                         ->schema([
                             Forms\Components\Toggle::make('paid'),
-                            Forms\Components\DatePicker::make('payment_date'),
+                            Forms\Components\DateTimePicker::make('payment_date'),
                         ]),
                 ])
             ]);
@@ -90,11 +95,9 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('rush_value')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('booster_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('booster.first_name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('booster2_id')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('booster3_id')
                     ->numeric()
