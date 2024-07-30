@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\OrderResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 class OrderResource extends Resource
 {
@@ -27,6 +29,28 @@ class OrderResource extends Resource
     protected static ?string $navigationGroup = 'Dummy Group1';
 
     protected static ?string $slug = 'pedidos';
+
+    protected static ?string $recordTitleAttribute = 'Pedido';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['rush_id', 'rush_site', 'buyer_name', 'buyer_discord', 'buyer_battlenet'];
+    }
+
+    public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
+    {
+        return $record->rush_id;
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Site do Rush' => $record->rush_site,
+            'Nome do Comprador' => $record->buyer_name,
+            'Discord do Comprador' => $record->buyer_discord,
+            'Battlenet do Comprador' => $record->buyer_battlenet,
+        ];
+    }
 
     public static function form(Form $form): Form
     {
