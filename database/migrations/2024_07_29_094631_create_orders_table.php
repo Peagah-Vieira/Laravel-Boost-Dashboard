@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('rush_site');
             $table->string('rush_id');
-            $table->text('rush_description');
+            $table->text('rush_description')->nullable();
             $table->float('rush_value');
-            $table->string('rush_images');
+            $table->string('rush_images')->nullable();
             $table->string('rush_progress');
             $table->string('buyer_name');
-            $table->string('buyer_discord');
-            $table->string('buyer_battlenet');
+            $table->string('buyer_discord')->nullable();
+            $table->string('buyer_battlenet')->nullable();
             $table->foreignId('booster_id')->references('id')->on('boosters')->onDelete('cascade');
             $table->foreignId('booster2_id')->references('id')->on('boosters')->onDelete('cascade');
             $table->foreignId('booster3_id')->references('id')->on('boosters')->onDelete('cascade');

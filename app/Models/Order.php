@@ -12,6 +12,10 @@ class Order extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'rush_images' => 'array',
+    ];
+
     public function booster(): BelongsTo
     {
         return $this->belongsTo(Booster::class);

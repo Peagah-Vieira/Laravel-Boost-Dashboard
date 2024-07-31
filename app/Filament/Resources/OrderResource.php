@@ -79,7 +79,6 @@ class OrderResource extends Resource
                                         ->numeric()
                                         ->label('Valor do Rush'),
                                     Forms\Components\TextInput::make('rush_description')
-                                        ->required()
                                         ->columnSpanFull()
                                         ->label('Descrição do Rush'),
                                     Forms\Components\Select::make('rush_progress')
@@ -92,46 +91,51 @@ class OrderResource extends Resource
                                         ->label('Progresso do Rush'),
                                     Forms\Components\FileUpload::make('rush_images')
                                         ->label('Imagens do Rush')
+                                        ->image()
                                         ->multiple()
                                         ->openable()
-                                        ->image()
-                                        ->imageEditor()
-                                        ->imageEditorAspectRatios([
-                                            '16:9',
-                                            '4:3',
-                                            '1:1',
-                                        ]),
                                 ]),
                             Forms\Components\Wizard\Step::make('Detalhes - Comprador')
                                 ->description('Dados do Comprador')
                                 ->completedIcon('heroicon-m-hand-thumb-up')
                                 ->schema([
                                     Forms\Components\TextInput::make('buyer_name')
-                                        ->maxLength(255)
+                                        ->required()
                                         ->label('Nome do Comprador'),
                                     Forms\Components\TextInput::make('buyer_discord')
-                                        ->maxLength(255)
                                         ->label('Discord do Comprador'),
                                     Forms\Components\TextInput::make('buyer_battlenet')
-                                        ->maxLength(255)
                                         ->label('Battlenet do Comprador'),
                                 ]),
                             Forms\Components\Wizard\Step::make('Detalhes - Boosters')
                                 ->description('Dados dos Boosters')
                                 ->completedIcon('heroicon-m-hand-thumb-up')
                                 ->schema([
-                                    Forms\Components\Select::make('booster_id')
-                                        ->relationship(name: 'booster', titleAttribute: 'first_name')
-                                        ->label('Booster 1'),
-                                    Forms\Components\Select::make('booster2_id')
-                                        ->relationship(name: 'booster', titleAttribute: 'first_name')
-                                        ->label('Booster 2'),
-                                    Forms\Components\Select::make('booster3_id')
-                                        ->relationship(name: 'booster', titleAttribute: 'first_name')
-                                        ->label('Booster 3'),
-                                    Forms\Components\Select::make('booster4_id')
-                                        ->relationship(name: 'booster', titleAttribute: 'first_name')
-                                        ->label('Booster 4'),
+                                    Forms\Components\Tabs::make('Tabs')->tabs([
+                                        Forms\Components\Tabs\Tab::make('Boosters Principais')
+                                            ->schema([
+                                                Forms\Components\Select::make('booster_id')
+                                                    ->required()
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 1'),
+                                                Forms\Components\Select::make('booster2_id')
+                                                    ->required()
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 2'),
+                                                Forms\Components\Select::make('booster3_id')
+                                                    ->required()
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 3'),
+                                                Forms\Components\Select::make('booster4_id')
+                                                    ->required()
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 4'),
+                                            ]),
+                                        Forms\Components\Tabs\Tab::make('Boosters Reposição')
+                                            ->schema([
+                                                //...
+                                            ]),
+                                    ]),
                                 ]),
                             Forms\Components\Wizard\Step::make('Pagamento')
                                 ->description('Relacionado ao Pagamento')
