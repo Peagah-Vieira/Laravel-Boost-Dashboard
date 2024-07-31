@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('rush_id');
             $table->text('rush_description');
             $table->float('rush_value');
+            $table->string('rush_images');
             $table->string('rush_progress');
             $table->string('buyer_name');
             $table->string('buyer_discord');

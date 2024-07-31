@@ -90,6 +90,17 @@ class OrderResource extends Resource
                                             'Concluido' => 'Concluido',
                                         ])
                                         ->label('Progresso do Rush'),
+                                    Forms\Components\FileUpload::make('rush_images')
+                                        ->label('Imagens do Rush')
+                                        ->multiple()
+                                        ->openable()
+                                        ->image()
+                                        ->imageEditor()
+                                        ->imageEditorAspectRatios([
+                                            '16:9',
+                                            '4:3',
+                                            '1:1',
+                                        ]),
                                 ]),
                             Forms\Components\Wizard\Step::make('Detalhes - Comprador')
                                 ->description('Dados do Comprador')
