@@ -26,6 +26,12 @@ return new class extends Migration
             $table->foreignId('booster2_id')->references('id')->on('boosters')->onDelete('cascade');
             $table->foreignId('booster3_id')->references('id')->on('boosters')->onDelete('cascade');
             $table->foreignId('booster4_id')->references('id')->on('boosters')->onDelete('cascade');
+            $table->foreignId('booster5_id')->nullable()->references('id')->on('boosters')->onDelete('cascade');
+            $table->foreignId('booster6_id')->nullable()->references('id')->on('boosters')->onDelete('cascade');
+            $table->foreignId('booster7_id')->nullable()->references('id')->on('boosters')->onDelete('cascade');
+            $table->foreignId('booster8_id')->nullable()->references('id')->on('boosters')->onDelete('cascade');
+            $table->foreignId('booster9_id')->nullable()->references('id')->on('boosters')->onDelete('cascade');
+            $table->foreignId('booster10_id')->nullable()->references('id')->on('boosters')->onDelete('cascade');
             $table->boolean('paid')->default(0);
             $table->dateTime('payment_date')->nullable();
             $table->timestamps();

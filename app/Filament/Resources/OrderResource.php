@@ -133,7 +133,25 @@ class OrderResource extends Resource
                                             ]),
                                         Forms\Components\Tabs\Tab::make('Boosters Reposição')
                                             ->schema([
-                                                //...
+                                                Forms\Components\Select::make('booster5_id')
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 5'),
+                                                Forms\Components\Select::make('booster6_id')
+                                                    ->default('Select Option')
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 6'),
+                                                Forms\Components\Select::make('booster7_id')
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 7'),
+                                                Forms\Components\Select::make('booster8_id')
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 8'),
+                                                Forms\Components\Select::make('booster9_id')
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 9'),
+                                                Forms\Components\Select::make('booster10_id')
+                                                    ->relationship(name: 'booster', titleAttribute: 'first_name')
+                                                    ->label('Booster 10'),
                                             ]),
                                     ]),
                                 ]),
