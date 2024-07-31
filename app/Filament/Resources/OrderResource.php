@@ -156,6 +156,7 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('rush_progress')
+                    ->label('Progresso do Rush')
                     ->searchable()
                     ->sortable()
                     ->badge()
@@ -165,19 +166,24 @@ class OrderResource extends Resource
                         'Concluido' => 'success',
                     }),
                 Tables\Columns\TextColumn::make('rush_description')
+                    ->label('Descrição do Rush')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('rush_value')
+                    ->label('Valor do Rush')
                     ->searchable()
                     ->sortable()
                     ->money('USD'),
                 Tables\Columns\TextColumn::make('buyer_name')
+                    ->label('Nome do Comprador')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('buyer_discord')
+                    ->label('Discord do Comprador')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('buyer_battlenet')
+                    ->label('Battlenet do Comprador')
                     ->searchable()
                     ->sortable(),
             ])
